@@ -112,10 +112,10 @@
 
   .spinner {
     margin: 3.2rem auto 1.6rem;
-    width: 60px;
+    width: 40px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 8px solid rgb(var(--color-primary-900));
+    border: 5px solid rgb(var(--color-primary-900));
     border-right-color: rgb(var(--color-primary-200));
     animation: rotate 1s infinite linear;
   }
