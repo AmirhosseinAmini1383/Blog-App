@@ -11,6 +11,9 @@ function CoverImage({ title, coverImageUrl, slug }) {
           fill
           className="object-cover object-center hover:scale-110 transition-all duration-300 ease-out"
           quality={90}
+          sizes="(max-width: 768px) 100vw,
+                 (max-width: 1200px) 50vw,
+                 33vw"
         />
       </Link>
     </div>

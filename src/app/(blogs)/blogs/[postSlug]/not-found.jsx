@@ -1,9 +1,7 @@
-"use client";
-import useMoveBack from "@/hooks/useMoveBack";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 function NotFound() {
-  const moveBack = useMoveBack();
   return (
     <div className="h-screen">
       <div className="container xl:max-w-screen-xl">
@@ -11,15 +9,15 @@ function NotFound() {
           <div>
             <p className="mb-8 text-9xl font-black text-primary-900">404</p>
             <p className="text-xl font-bold text-secondary-700 mb-8">
-              صفحه ای که دنبالش بودید، پیدا نشد
+              هیچ پستی با این مشخصات نشد
             </p>
-            <button
-              onClick={moveBack}
-              className="flex items-center gap-x-2 text-secondary-500"
+            <Link
+              href="/blogs"
+              className="text-secondary-700 flex items-center gap-x-2"
             >
               <ArrowRightIcon className="w-6 h-6 text-primary-900" />
-              <span> برگشت</span>
-            </button>
+              <span>رفتن به صفحه پست</span>
+            </Link>
           </div>
         </div>
       </div>

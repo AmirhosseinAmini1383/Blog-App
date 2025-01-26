@@ -1,12 +1,9 @@
 import Link from "next/link";
 
 async function CategoryList() {
-  await new Promise((res, rej) => setTimeout(() => res(), 1000));
-
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/category/list`);
-  const {
-    data: { categories },
-  } = await res.json();
+  const { data } = await res.json();
+  const { categories } = data || {};
 
   return (
     <ul className="space-y-4">
