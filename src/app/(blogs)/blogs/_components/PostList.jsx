@@ -3,11 +3,10 @@ import CoverImage from "./CoverImage";
 import Author from "./Author";
 import StudyTime from "./StudyTime";
 import PostInteraction from "./PostInteraction";
+import { getPosts } from "@/services/postService";
 
 async function PostList() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/post/list`);
-  const { data } = await res.json();
-  const { posts } = data || {};
+  const posts = await getPosts();
 
   return (
     posts.length > 0 && (
