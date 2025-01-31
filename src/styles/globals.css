@@ -35,7 +35,7 @@
       --color-red-300: 252, 165, 165;
     }
     &.dark-mode {
-      --background-app-rgb: 20, 20, 20;
+      --background-app-rgb: 12, 24, 33;
       --color-secondary-900: 249, 250, 251;
       --color-secondary-800: 243, 244, 246;
       --color-secondary-700: 229, 231, 235;
@@ -76,8 +76,14 @@
   .form {
     @apply flex flex-col gap-y-8 bg-secondary-0 p-4 rounded-xl w-full max-w-lg;
   }
-  .textField__input {
-    @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-secondary-200;
+  .textField {
+    @apply w-full py-3 px-4 rounded-xl bg-secondary-100 text-secondary-900 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-lg;
+  }
+  .textField__valid {
+    @apply border border-secondary-100 hover:border-primary-500 focus:border-primary-500  focus:shadow-primary-200 dark:focus:shadow-secondary-200;
+  }
+  .textField--invalid {
+    @apply border border-red-600 focus:shadow-secondary-200;
   }
   .btn {
     @apply px-3 py-3 rounded-xl transition-all duration-300;
