@@ -5,6 +5,9 @@ import RHFTextField from "@/ui/RHFTextField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
+import SpinnerMini from "@/ui/SpinnerMini";
 
 // export const metadata = {
 //   title: "ثبت نام",
@@ -14,15 +17,18 @@ const schema = yup
   .object({
     name: yup
       .string()
-      .min(5, "حداقل ۵ کاراکتر وارد کنید")
+      .min(5, "نام و نام خانوادگی باید حداقل ۵ کاراکتر باشد")
       .max(30, "حداکثر میتوانید ۳۰ کاراکتر وارد کنید")
       .required("نام و نام خانوادگی الزامی است"),
     email: yup.string().email("ایمیل نامعتبر است").required("ایمیل الزامی است"),
-    password: yup.string().required("رمز عبور الزامی است"),
+    password: yup
+      .string()
+      .min(8, "رمز عبور باید حداقل ۸ کاراکتر باشد")
+      .required("رمز عبور الزامی است"),
   })
   .required();
 
-function SingUp() {
+function Signup() {
   const {
     register,
     handleSubmit,
@@ -32,8 +38,10 @@ function SingUp() {
     mode: "onTouched",
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const { signup } = useAuth();
+
+  const onSubmit = async (values) => {
+    await signup(values);
   };
 
   return (
@@ -66,12 +74,26 @@ function SingUp() {
           isRequired
           errors={errors}
         />
-        <Button type="submit" variant="primary" className="w-full">
-          تایید
-        </Button>
+        <div>
+          {isLoading ? (
+            <Button variant="primary" className="w-full">
+              <SpinnerMini className="mx-auto" />
+            </Button>
+          ) : (
+            <Button type="submit" variant="primary" className="w-full">
+              تایید
+            </Button>
+          )}
+        </div>
       </form>
+      <Link
+        href="/signin"
+        className="text-secondary-400 font-medium text-sm mt-6"
+      >
+        قبلا ثبت نام کردم! <span className="text-primary-800">ورود</span>
+      </Link>
     </div>
   );
 }
 
-export default SingUp;
+export default Signup;
