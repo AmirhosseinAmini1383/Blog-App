@@ -4,9 +4,13 @@ import Author from "./Author";
 import StudyTime from "./StudyTime";
 import PostInteraction from "./PostInteraction";
 import { getPosts } from "@/services/postService";
+import setCookieOnReq from "@/utils/setCookieOnReq";
+import { cookies } from "next/headers";
 
 async function PostList() {
-  const posts = await getPosts();
+  const cookieStore = cookies();
+  const options = setCookieOnReq(cookieStore);
+  const posts = await getPosts(options);
 
   return (
     posts.length > 0 && (
