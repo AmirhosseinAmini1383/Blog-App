@@ -3,15 +3,8 @@ import CoverImage from "./CoverImage";
 import Author from "./Author";
 import StudyTime from "./StudyTime";
 import PostInteraction from "./PostInteraction";
-import { getPosts } from "@/services/postService";
-import setCookieOnReq from "@/utils/setCookieOnReq";
-import { cookies } from "next/headers";
 
-async function PostList() {
-  const cookieStore = cookies();
-  const options = setCookieOnReq(cookieStore);
-  const posts = await getPosts(options);
-
+async function PostList({ posts }) {
   return (
     posts.length > 0 && (
       <div className="grid grid-cols-12 gap-8">
