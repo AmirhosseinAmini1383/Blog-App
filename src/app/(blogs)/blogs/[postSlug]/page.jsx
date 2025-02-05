@@ -1,6 +1,7 @@
 import { getPosts, getPostBySlug } from "@/services/postService";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import RelatedPost from "../_components/RelatedPost";
 
 export const dynamicParams = false;
 export async function generateStaticParams() {
@@ -48,6 +49,7 @@ async function SinglePost({ params }) {
           priority={true}
         />
       </div>
+      {post.related.length > 0 && <RelatedPost posts={post.related} />}
     </div>
   );
 }
