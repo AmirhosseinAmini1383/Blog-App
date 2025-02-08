@@ -254,7 +254,7 @@ table td {
   position: absolute;
   right: -15px;
   top: 76px;
-  width: 4px;
+  width: 3px;
   background-color: rgb(var(--color-secondary-200));
 }
 

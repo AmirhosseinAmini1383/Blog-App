@@ -2,6 +2,7 @@ import { getPosts, getPostBySlug } from "@/services/postService";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import RelatedPost from "../_components/RelatedPost";
+import PostComments from "../_components/comment/PostComments";
 
 export const dynamicParams = false;
 export async function generateStaticParams() {
@@ -42,7 +43,6 @@ async function SinglePost({ params }) {
           fill
           src={post.coverImageUrl}
           alt={post.title}
-          quality={100}
           sizes="(max-width: 768px) 100vw,
                  (max-width: 1200px) 50vw,
                  33vw"
@@ -50,6 +50,7 @@ async function SinglePost({ params }) {
         />
       </div>
       {post.related.length > 0 && <RelatedPost posts={post.related} />}
+      <PostComments {...post} />
     </div>
   );
 }
