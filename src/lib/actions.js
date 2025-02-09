@@ -4,7 +4,10 @@ import setCookieOnReq from "@/utils/setCookieOnReq";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export async function createComment(postId, parentId, formData) {
+// bind
+// export async function createComment(postId, parentId, formData) {
+
+export async function createComment(prevState, { formData, postId, parentId }) {
   const cookiesStore = cookies();
   const options = setCookieOnReq(cookiesStore);
 
@@ -16,9 +19,14 @@ export async function createComment(postId, parentId, formData) {
 
   try {
     const { message } = await createCommentApi(rawFormData, options);
-    console.log(message);
-  } catch (error) {
-    console.log(error?.response?.data?.message);
+    revalidatePath("blog/[postSlug]");
+    return {
+      message,
+    };
+  } catch (err) {
+    const error = err?.response?.data?.message;
+    return {
+      error,
+    };
   }
-  revalidatePath("blog/[postSlug]");
 }
