@@ -16,19 +16,20 @@ function Header({}) {
       className={`bg-secondary-0 ${isLoading ? "bg-opacity-30 blur-md" : ""}`}
     >
       <div className="flex items-center justify-between py-5 px-4 lg:px-8">
-        <ButtonIcon
-          className="block lg:hidden border-none"
-          variant="outline"
-          onClick={() =>
-            setIsOpenDrawer((prevIsOpenDrawer) => !prevIsOpenDrawer)
-          }
-        >
-          {isOpenDrawer ? <XMarkIcon /> : <Bars3Icon />}
-        </ButtonIcon>
-
-        <span className="text-sm lg:text-lg font-bold text-secondary-700">
-          سلام؛ {user?.name}
-        </span>
+        <div className="flex items-center justify-center gap-x-4">
+          <ButtonIcon
+            className="block lg:hidden border-none"
+            variant="outline"
+            onClick={() =>
+              setIsOpenDrawer((prevIsOpenDrawer) => !prevIsOpenDrawer)
+            }
+          >
+            {isOpenDrawer ? <XMarkIcon /> : <Bars3Icon />}
+          </ButtonIcon>
+          <span className="text-sm lg:text-lg font-bold text-secondary-700">
+            سلام؛ {user?.name}
+          </span>
+        </div>
 
         <Link href="/profile">
           <Avatar src={user ? user?.avatarUrl : ""} />
