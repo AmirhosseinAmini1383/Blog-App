@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 // export async function createComment(postId, parentId, formData) {
 
 export async function createComment(prevState, { formData, postId, parentId }) {
-  const cookiesStore = cookies();
+  const cookiesStore = await cookies();
   const options = setCookieOnReq(cookiesStore);
 
   const rawFormData = {

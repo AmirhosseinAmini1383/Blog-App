@@ -7,7 +7,7 @@ import { toPersianDigits } from "@/utils/numberFormatter";
 
 async function BlogPage({ searchParams }) {
   const queries = queryString.stringify(await searchParams);
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const options = setCookieOnReq(cookieStore);
   const posts = await getPosts(queries, options);
 

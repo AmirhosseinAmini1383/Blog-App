@@ -1,5 +1,6 @@
 import Button from "@/ui/Button";
 import Link from "next/link";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "خانه - وب اپلیکیشن مدیریت بلاگ",
@@ -8,6 +9,8 @@ export const metadata = {
 export default function Home() {
   return (
     <div>
+      <Header />
+
       <h1 className="font-bold text-center text-2xl md:text-5xl text-secondary-800 my-20">
         اپلیکیشن مدیریت بلاگ
       </h1>

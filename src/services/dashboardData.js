@@ -5,7 +5,7 @@ import { getAllCommentsApi } from "./commentService";
 import { getPosts } from "./postService";
 
 export async function fetchCardDate() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const options = setCookieOnReq(cookieStore);
 
   // ARTIFICIALLY DELAY A RESPONSE FOR DEMO PURPOSES
