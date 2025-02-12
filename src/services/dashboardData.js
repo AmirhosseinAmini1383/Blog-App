@@ -8,6 +8,9 @@ export async function fetchCardDate() {
   const cookieStore = cookies();
   const options = setCookieOnReq(cookieStore);
 
+  // ARTIFICIALLY DELAY A RESPONSE FOR DEMO PURPOSES
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   try {
     const data = await Promise.all([
       getAllUsersApi(options),
@@ -24,7 +27,16 @@ export async function fetchCardDate() {
       numOfPosts,
     };
   } catch (error) {
-    console.log(error.response.data.message);
+    console.log(error?.response?.data?.message);
     throw new Error("خطا در بارگذاری اطلاعات");
+  }
+}
+
+export async function fetchLatestPosts() {
+  try {
+    const posts = await getPosts("sort=latest&limit=5");
+    return posts;
+  } catch (error) {
+    throw new Error(error?.response?.data?.message);
   }
 }
