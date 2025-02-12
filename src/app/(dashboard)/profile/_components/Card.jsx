@@ -10,7 +10,7 @@ const iconMap = {
   posts: DocumentTextIcon,
 };
 
-export function Card({ title, value, type }) {
+export default function Card({ title, value, type }) {
   const Icon = iconMap[type];
 
   return (
