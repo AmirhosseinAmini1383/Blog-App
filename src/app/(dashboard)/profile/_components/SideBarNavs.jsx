@@ -1,5 +1,5 @@
 import {
-  ChatBubbleBottomCenterIcon,
+  ChatBubbleBottomCenterTextIcon,
   DocumentTextIcon,
   RectangleGroupIcon,
   Squares2X2Icon,
@@ -26,7 +26,7 @@ const sidebarNavs = [
   {
     id: 3,
     title: "نظرات",
-    icon: <ChatBubbleBottomCenterIcon className="w-5 h-5" />,
+    icon: <ChatBubbleBottomCenterTextIcon className="w-5 h-5" />,
     href: "/profile/comments",
   },
   {

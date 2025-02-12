@@ -1,13 +1,13 @@
 import {
   UserGroupIcon,
   ChatBubbleBottomCenterTextIcon,
-  DocumentIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
 const iconMap = {
   comments: ChatBubbleBottomCenterTextIcon,
   users: UserGroupIcon,
-  posts: DocumentIcon,
+  posts: DocumentTextIcon,
 };
 
 export function Card({ title, value, type }) {
