@@ -4,6 +4,8 @@ import setCookieOnReq from "@/utils/setCookieOnReq";
 import { getPosts } from "@/services/postService";
 import queryString from "query-string";
 import { toPersianDigits } from "@/utils/numberFormatter";
+import { Suspense } from "react";
+import Fallback from "@/ui/Fallback";
 
 async function BlogPage({ searchParams }) {
   const queries = queryString.stringify(await searchParams);
@@ -23,7 +25,9 @@ async function BlogPage({ searchParams }) {
           <span className="font-bold">&quot;{search}&quot;</span>
         </p>
       ) : null}
-      <PostList posts={posts} />
+      <Suspense fallback={<Fallback />} key={queries}>
+        <PostList posts={posts} />
+      </Suspense>
     </>
   );
 }

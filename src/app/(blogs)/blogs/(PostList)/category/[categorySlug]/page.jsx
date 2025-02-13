@@ -1,8 +1,10 @@
 import { getPosts } from "@/services/postService";
+import Fallback from "@/ui/Fallback";
 import { toPersianDigits } from "@/utils/numberFormatter";
 import setCookieOnReq from "@/utils/setCookieOnReq";
 import { cookies } from "next/headers";
 import queryString from "query-string";
+import { Suspense } from "react";
 
 const { default: PostList } = require("app/(blogs)/blogs/_components/PostList");
 
@@ -34,7 +36,9 @@ async function Category({ params, searchParams }) {
           </p>
         )
       )}
-      <PostList posts={posts} />
+      <Suspense fallback={<Fallback />} key={queries}>
+        <PostList posts={posts} />
+      </Suspense>
     </>
   );
 }
