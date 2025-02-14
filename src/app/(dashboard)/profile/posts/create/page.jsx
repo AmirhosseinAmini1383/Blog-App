@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/ui/Breadcrumbs";
+import CreatePostForm from "./_/CreatePostForm";
 
 function page() {
   return (
@@ -16,7 +17,7 @@ function page() {
           },
         ]}
       />
-      Create Post Form
+      <CreatePostForm />
     </div>
   );
 }
