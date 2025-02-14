@@ -1,20 +1,7 @@
 "use client";
-import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 function Drawer({ open, onClose, children }) {
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) onClose();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    if (window.innerWidth >= 1024) onClose();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, [onClose]);
-
   return createPortal(
     <>
       <div

@@ -11,6 +11,9 @@ import Drawer from "@/ui/Drawer";
 function Header({}) {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const { user, isLoading } = useAuth();
+
+  const togglehandler = () => setIsOpenDrawer(!isOpenDrawer);
+
   return (
     <header
       className={`bg-secondary-0 ${isLoading ? "bg-opacity-30 blur-md" : ""}`}
@@ -20,9 +23,7 @@ function Header({}) {
           <ButtonIcon
             className="block lg:hidden border-none"
             variant="outline"
-            onClick={() =>
-              setIsOpenDrawer((prevIsOpenDrawer) => !prevIsOpenDrawer)
-            }
+            onClick={togglehandler}
           >
             {isOpenDrawer ? <XMarkIcon /> : <Bars3Icon />}
           </ButtonIcon>
@@ -35,8 +36,8 @@ function Header({}) {
           <Avatar src={user ? user?.avatarUrl : ""} />
         </Link>
 
-        <Drawer open={isOpenDrawer} onClose={() => setIsOpenDrawer(false)}>
-          <SideBar onClose={() => setIsOpenDrawer(false)} />
+        <Drawer open={isOpenDrawer} onClose={togglehandler}>
+          <SideBar onClose={togglehandler} />
         </Drawer>
       </div>
     </header>

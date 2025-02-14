@@ -2,9 +2,13 @@ import { getPosts } from "@/services/postService";
 import Empty from "@/ui/Empty";
 import Table from "@/ui/Table";
 import PostRow from "./PostRow";
+import { cookies } from "next/headers";
+import setCookieOnReq from "@/utils/setCookieOnReq";
 
 async function PostsTable({ query = "" }) {
-  const posts = await getPosts(query);
+  const cookieStore = await cookies();
+  const options = setCookieOnReq(cookieStore);
+  const { posts } = await getPosts(query, options);
   if (!posts.length) return <Empty resourceName="پستی" />;
   return (
     <Table>
