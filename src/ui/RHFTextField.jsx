@@ -23,7 +23,7 @@ export default function RHFTextField({
         id={name}
         dir={dir}
         className={`textField ${
-          hasError ? "textField--invalid " : "textField__valid"
+          hasError ? "textField__invalid " : "textField__valid"
         }  ${dir === "ltr" ? "text-left" : "text-right"}`}
         {...register(name, validationSchema)}
         {...rest}

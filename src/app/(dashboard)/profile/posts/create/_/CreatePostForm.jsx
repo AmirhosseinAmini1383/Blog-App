@@ -1,18 +1,52 @@
 "use client";
 import { useCategories } from "@/hooks/useCategories";
+import Button from "@/ui/Button";
+import ButtonIcon from "@/ui/ButtonIcon";
+import FileInput from "@/ui/FileInput";
 import RHFSelect from "@/ui/RHFSelect";
 import RHFTextField from "@/ui/RHFTextField";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
-const schema = yup.object();
+const schema = yup
+  .object({
+    title: yup
+      .string()
+      .min(5, "حداقل ۵ کاراکتر را وارد کنید")
+      .required("عنوان ضروری است"),
+    briefText: yup
+      .string()
+      .min(10, "حداقل ۱۰ کاراکتر را وارد کنید")
+      .required("توضیحات ضروری است"),
+    text: yup
+      .string()
+      .min(10, "حداقل ۱۰ کاراکتر را وارد کنید")
+      .required("توضیحات ضروری است"),
+    slug: yup.string().required("اسلاگ ضروری است"),
+    readingTime: yup
+      .number()
+      .positive("عدد باید مثبت باشد")
+      .integer("عدد باید صحیح باشد")
+      .required("زمان مطالعه ضروری است")
+      .typeError("یک عدد را وارد کنید"),
+    category: yup.string().required("دسته بندی ضروری است"),
+    coverImage: yup.mixed().required("کاور پست الزامی است"),
+  })
+  .required();
+
 function CreatePostForm() {
   const { categories } = useCategories();
+  const [coverImageUrl, setCoverImageUrl] = useState(null);
 
   const {
+    control,
     register,
     formState: { errors },
+    setValue,
     handleSubmit,
     reset,
   } = useForm({
@@ -20,8 +54,12 @@ function CreatePostForm() {
     resolver: yupResolver(schema),
   });
 
+  const onSubmit = (values) => {
+    console.log(values);
+  };
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <RHFTextField
         name="title"
         label="عنوان"
@@ -60,10 +98,56 @@ function CreatePostForm() {
       <RHFSelect
         name="category"
         label="دسته بندی"
+        errors={errors}
         register={register}
         isRequired
         options={categories}
       />
+      <Controller
+        name="coverImage"
+        control={control}
+        rules={{ required: "کاور پست الزامی است" }}
+        render={({ field: { value, onChange, ...rest } }) => (
+          <FileInput
+            {...rest}
+            type="file"
+            label="انتخاب کاور پست"
+            name="coverImage"
+            errors={errors}
+            value={value?.fileName}
+            onChange={(event) => {
+              const file = event.target.files[0];
+              onChange(file);
+              setCoverImageUrl(URL.createObjectURL(file));
+              event.target.value = null;
+            }}
+          />
+        )}
+      />
+      {coverImageUrl && (
+        <div className="relative aspect-video overflow-hidden rounded-lg">
+          <Image
+            fill
+            alt="cover-image"
+            src={coverImageUrl}
+            className="object-cover object-center"
+          />
+          <ButtonIcon
+            variant="red"
+            onClick={() => {
+              setCoverImageUrl(null);
+              setValue("coverImage", null);
+            }}
+            className="w-6 h-6 absolute left-2 top-2"
+          >
+            <XMarkIcon />
+          </ButtonIcon>
+        </div>
+      )}
+
+      <Button variant="primary" type="submit" className="w-full">
+        تایید
+      </Button>
     </form>
   );
 }

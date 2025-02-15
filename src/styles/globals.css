@@ -82,7 +82,7 @@
   .textField__valid {
     @apply border border-secondary-100 hover:border-primary-500 focus:border-primary-500  focus:shadow-primary-200 dark:focus:shadow-secondary-200;
   }
-  .textField--invalid {
+  .textField__invalid {
     @apply border border-red-600 focus:shadow-secondary-200;
   }
   .btn {
