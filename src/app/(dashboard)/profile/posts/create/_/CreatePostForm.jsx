@@ -11,6 +11,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
+import useCreatePost from "./useCreatePost";
+import SpinnerMini from "@/ui/SpinnerMini";
+import { useRouter } from "next/navigation";
 
 const schema = yup
   .object({
@@ -41,7 +44,8 @@ const schema = yup
 function CreatePostForm() {
   const { categories } = useCategories();
   const [coverImageUrl, setCoverImageUrl] = useState(null);
-
+  const { createPost, isCreating } = useCreatePost();
+  const { push } = useRouter();
   const {
     control,
     register,
@@ -54,8 +58,16 @@ function CreatePostForm() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    createPost(formData, {
+      onSuccess: () => {
+        push("/profile/posts");
+      },
+    });
   };
 
   return (
@@ -145,9 +157,17 @@ function CreatePostForm() {
         </div>
       )}
 
-      <Button variant="primary" type="submit" className="w-full">
-        تایید
-      </Button>
+      <div>
+        {isCreating ? (
+          <Button variant="primary" className="w-full">
+            <SpinnerMini className="mx-auto" />
+          </Button>
+        ) : (
+          <Button variant="primary" type="submit" className="w-full">
+            تایید
+          </Button>
+        )}
+      </div>
     </form>
   );
 }
