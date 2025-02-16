@@ -1,7 +1,12 @@
 "use client";
 import ButtonIcon from "@/ui/ButtonIcon";
+import ConfirmDelete from "@/ui/ConfirmDelete";
+import Modal from "@/ui/Modal";
 import { TrashIcon, PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useActionState, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import deletePost from "../actions/deletePost";
 
 export function CreatePost() {
   return (
@@ -16,11 +21,45 @@ export function CreatePost() {
   );
 }
 
-export function DeletePost({ id }) {
+export function DeletePost({ id: postId, postTitle }) {
+
+  const [state, formAction, pending] = useActionState(deletePost, {
+    error: "",
+    message: "",
+  });
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  useEffect(() => {
+    if (state?.message) {
+      toast.success(state.message);
+      setIsDeleteOpen(false);
+    }
+    if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state]);
+
   return (
-    <ButtonIcon variant="outline" onClick={() => console.log(id)}>
-      <TrashIcon className="!text-error" />
-    </ButtonIcon>
+    <>
+      <ButtonIcon variant="outline" onClick={() => setIsDeleteOpen(true)}>
+        <TrashIcon className="!text-error" />
+      </ButtonIcon>
+      <Modal
+        title={`حذف ${postTitle}`}
+        open={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+      >
+        <ConfirmDelete
+          resourceName={postTitle}
+          onClose={() => setIsDeleteOpen(false)}
+          // onConfirm={deletePost.bind(null, postId)}
+          onConfirm={async (formData) => {
+            await formAction({ formData, postId });
+          }}
+          pending={pending}
+        />
+      </Modal>
+    </>
   );
 }
 
