@@ -22,7 +22,7 @@ async function EditPage({ params }) {
           },
         ]}
       />
-      <CreatePostForm />
+      <CreatePostForm postToEdit={post} />
     </div>
   );
 }
