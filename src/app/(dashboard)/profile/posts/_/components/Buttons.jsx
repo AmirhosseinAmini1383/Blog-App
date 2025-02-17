@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import deletePost from "../actions/deletePost";
+import useDeletePost from "../useDeletePost";
+import { useRouter } from "next/navigation";
 
 export function CreatePost() {
   return (
@@ -22,23 +24,9 @@ export function CreatePost() {
 }
 
 export function DeletePost({ id: postId, postTitle }) {
-
-  const [state, formAction, pending] = useActionState(deletePost, {
-    error: "",
-    message: "",
-  });
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  useEffect(() => {
-    if (state?.message) {
-      toast.success(state.message);
-      setIsDeleteOpen(false);
-    }
-    if (state?.error) {
-      toast.error(state.error);
-    }
-  }, [state]);
-
+  const { deletePost, isDeleting } = useDeletePost();
+  const { refresh } = useRouter();
   return (
     <>
       <ButtonIcon variant="outline" onClick={() => setIsDeleteOpen(true)}>
@@ -52,11 +40,19 @@ export function DeletePost({ id: postId, postTitle }) {
         <ConfirmDelete
           resourceName={postTitle}
           onClose={() => setIsDeleteOpen(false)}
-          // onConfirm={deletePost.bind(null, postId)}
-          onConfirm={async (formData) => {
-            await formAction({ formData, postId });
+          onConfirm={(e) => {
+            e.preventDefault();
+            deletePost(
+              { id: postId },
+              {
+                onSuccess: () => {
+                  setIsDeleteOpen(false);
+                  refresh("/profile/posts");
+                },
+              }
+            );
           }}
-          pending={pending}
+          disabled={isDeleting}
         />
       </Modal>
     </>
