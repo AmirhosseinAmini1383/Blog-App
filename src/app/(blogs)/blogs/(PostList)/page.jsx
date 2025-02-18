@@ -6,17 +6,18 @@ import queryString from "query-string";
 import { toPersianDigits } from "@/utils/numberFormatter";
 import { Suspense } from "react";
 import Fallback from "@/ui/Fallback";
+import Pagination from "@/ui/Pagination";
 
 async function BlogPage({ searchParams }) {
   const queries = queryString.stringify(await searchParams);
   const cookieStore = await cookies();
   const options = setCookieOnReq(cookieStore);
-  const { posts } = await getPosts(queries, options);
+  const { posts, totalPages } = await getPosts(queries, options);
 
   const { search } = await searchParams;
 
   return (
-    <>
+    <div>
       {search ? (
         <p className="mb-4 text-secondary-700">
           {posts.length === 0
@@ -28,7 +29,10 @@ async function BlogPage({ searchParams }) {
       <Suspense fallback={<Fallback />} key={queries}>
         <PostList posts={posts} />
       </Suspense>
-    </>
+      <div className="mt-5 flex items-center justify-center w-full">
+        <Pagination totalPages={totalPages} />
+      </div>
+    </div>
   );
 }
 

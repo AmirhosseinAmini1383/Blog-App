@@ -15,7 +15,7 @@ export async function fetchCardDate() {
     const data = await Promise.all([
       getAllUsersApi(options),
       getAllCommentsApi(options),
-      getPosts(),
+      getPosts("limit=1000"),
     ]);
 
     const numberOfUsers = Number(data[0].users.length ?? 0);
