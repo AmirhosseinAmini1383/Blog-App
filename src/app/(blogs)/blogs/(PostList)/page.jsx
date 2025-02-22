@@ -29,7 +29,7 @@ async function BlogPage({ searchParams }) {
       <Suspense fallback={<Fallback />} key={queries}>
         <PostList posts={posts} />
       </Suspense>
-      <div className="mt-5 flex items-center justify-center w-full">
+      <div className="my-5 flex items-center justify-center w-full">
         <Pagination totalPages={totalPages} />
       </div>
     </div>
