@@ -9,13 +9,16 @@ import {
 import Link from "next/link";
 import SideBarNavs from "./SideBarNavs";
 import ButtonIcon from "@/ui/ButtonIcon";
+import { logoutApi } from "@/services/authService";
 
 function SideBar({ onClose }) {
-  //   const { logout } = useAuth();
-
-  //   const logoutHandler = async () => {
-  //     await logout;
-  //   };
+  const logoutHandler = async () => {
+    await logoutApi();
+    // localStorage.removeItem("userInfo");
+    // localStorage.removeItem("cartItems");
+    // localStorage.removeItem("token");
+    document.location.href = "/";
+  };
 
   return (
     <div className="overflow-y-auto flex flex-col p-5 h-screen pt-10 lg:pt-8">
@@ -40,7 +43,7 @@ function SideBar({ onClose }) {
       <div className="overflow-y-auto flex-auto">
         <SideBarNavs />
         <div
-          //   onClick={logoutHandler}
+          onClick={logoutHandler}
           className="flex items-center gap-x-2 rounded-2xl font-medium transition-all duration-200 text-secondary-700 py-3 px-4 hover:text-red-400 cursor-pointer"
         >
           <ArrowLeftStartOnRectangleIcon className="ml-4 h-5 w-5" />

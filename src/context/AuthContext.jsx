@@ -1,5 +1,10 @@
 "use client";
-import { getUserApi, signinApi, signupApi } from "@/services/authService";
+import {
+  getUserApi,
+  logoutApi,
+  signinApi,
+  signupApi,
+} from "@/services/authService";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { createContext, useReducer, useContext, useEffect } from "react";
@@ -41,6 +46,13 @@ const authReducer = (state, action) => {
         user: action.payload,
         isAuthenticated: true,
       };
+    case "logout":
+      return {
+        user: null,
+        isAuthenticated: false,
+      };
+    default:
+      throw new Error("Unknown action!");
   }
 };
 
@@ -92,6 +104,18 @@ export default function AuthProvider({ children }) {
     }
   };
 
+  async function logout() {
+    console.log("logout");
+    try {
+      await logoutApi();
+      router.push("/");
+      // document.location.href = "/";
+      dispatch({ type: "logout" });
+    } catch (error) {
+      toast.error(error);
+    }
+  }
+
   useEffect(() => {
     async function fetchDate() {
       await getUser();
@@ -101,7 +125,7 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, isLoading, signin, signup }}
+      value={{ user, isAuthenticated, isLoading, signin, signup, logout }}
     >
       {children}
     </AuthContext.Provider>
