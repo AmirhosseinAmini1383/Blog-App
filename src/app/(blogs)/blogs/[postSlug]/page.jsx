@@ -35,8 +35,14 @@ async function SinglePost({ params }) {
       <h1 className="text-secondary-700 text-2xl font-bold mb-8">
         {post.title}
       </h1>
-      <p className="mb-4">{post.briefText}</p>
-      <p className="mb-8">{post.text}</p>
+      <p className="mb-10 font-semibold">{post.briefText}</p>
+      <div className="mb-8">
+        {post.text.split("\n\n").map((paragraph, index) => (
+          <p key={index} className="mb-4">
+            {paragraph}
+          </p>
+        ))}
+      </div>
       <div className="relative aspect-video overflow-hidden rounded-lg mb-10">
         <Image
           className="object-cover object-center hover:scale-105 transition-all duration-300 ease-out"

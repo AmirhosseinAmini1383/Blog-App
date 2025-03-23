@@ -7,7 +7,7 @@ const DarkModeContext = createContext();
 export function DarkModeProvider({ children }) {
   const [isDarkMode, setIsDarkMode] = useLocalStorageState(
     "isDarkMode",
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+    window && window.matchMedia("(prefers-color-scheme: dark)").matches
   );
 
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
@@ -29,7 +29,7 @@ export function DarkModeProvider({ children }) {
   );
 }
 
-export function useDrakMode() {
+export function useDarkMode() {
   const context = useContext(DarkModeContext);
   if (context === undefined)
     throw new Error("DarkModeContext was used outside of DarkModeProvider");

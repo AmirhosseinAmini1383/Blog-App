@@ -6,7 +6,7 @@ export function useCategories() {
     queryKey: ["categories"],
     queryFn: getCategoryApi,
   });
-  const { categories: rawCategories = [] } = data || {};  
+  const { categories: rawCategories = [] } = data || {};
   const categories = rawCategories.map((item) => ({
     label: item.title,
     value: item._id,
@@ -15,5 +15,5 @@ export function useCategories() {
     label: item.title,
     value: item.englishTitle,
   }));
-  return { categories, transformedCategories, isLoading };
+  return { rawCategories, categories, transformedCategories, isLoading };
 }

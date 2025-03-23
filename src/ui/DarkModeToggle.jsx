@@ -1,5 +1,5 @@
 // "use client";
-import { useDrakMode } from "../context/DarkModeContext";
+import { useDarkMode } from "../context/DarkModeContext";
 import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -62,7 +62,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 function DarkModeToggle() {
-  const { toggleDarkMode } = useDrakMode();
+  const { toggleDarkMode } = useDarkMode();
   return (
     <FormGroup>
       <FormControlLabel
