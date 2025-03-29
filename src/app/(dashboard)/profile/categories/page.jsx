@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import CategoryTable from "./_/components/CategoryTable";
 import { CreatePost } from "./_/components/Buttons";
 
-function page() {
+function CategoryPage() {
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-secondary-700 mb-12 items-center">
@@ -21,4 +21,4 @@ function page() {
   );
 }
 
-export default page;
+export default CategoryPage;

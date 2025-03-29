@@ -2,11 +2,13 @@ import Table from "@/ui/Table";
 import CategoryRow from "./CategoryRow";
 import { useCategories } from "@/hooks/useCategories";
 import Fallback from "@/ui/Fallback";
+import Empty from "@/ui/Empty";
 
 function CategoryTable() {
   const { rawCategories, isLoading } = useCategories();
 
   if (isLoading) return <Fallback />;
+  if (!rawCategories.length) return <Empty resourceName="دسته بندی" />;
   return (
     <Table>
       <Table.Header>
