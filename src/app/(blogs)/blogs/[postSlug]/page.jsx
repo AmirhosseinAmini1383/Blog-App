@@ -4,16 +4,16 @@ import { notFound } from "next/navigation";
 import RelatedPost from "../_components/RelatedPost";
 import PostComments from "../_components/comment/PostComments";
 
-export const dynamicParams = false;
-export async function generateStaticParams() {
-  const { posts } = await getPosts("limit=1000");
-  const slugs = posts.map((post) => {
-    return {
-      postSlug: post.slug,
-    };
-  });
-  return slugs;
-}
+// export const dynamicParams = false;
+// export async function generateStaticParams() {
+//   const { posts } = await getPosts();
+//   const slugs = posts.map((post) => {
+//     return {
+//       postSlug: post.slug,
+//     };
+//   });
+//   return slugs;
+// }
 
 export async function generateMetadata({ params }) {
   const postSlug = (await params).postSlug;
@@ -26,7 +26,14 @@ export async function generateMetadata({ params }) {
 
 async function SinglePost({ params }) {
   const postSlug = (await params).postSlug;
-  const post = await getPostBySlug(postSlug);
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/post/slug/${postSlug}`,
+    { cache: "no-store" }
+  );
+  const {
+    data: { post },
+  } = await res.json();
 
   if (!post) notFound();
 
