@@ -24,6 +24,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
+export const dynamic = "force-dynamic";
+
 async function SinglePost({ params }) {
   const postSlug = (await params).postSlug;
 
