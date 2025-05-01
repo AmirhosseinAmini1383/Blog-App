@@ -105,7 +105,6 @@ export default function AuthProvider({ children }) {
   };
 
   async function logout() {
-    console.log("logout");
     try {
       await logoutApi();
       router.push("/");

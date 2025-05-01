@@ -36,7 +36,7 @@ function Modal({ open, onClose, title, children, description = "" }) {
           {children}
         </div>
       </div>,
-      document.body
+      typeof document !== "undefined" && document.body
     )
   );
 }

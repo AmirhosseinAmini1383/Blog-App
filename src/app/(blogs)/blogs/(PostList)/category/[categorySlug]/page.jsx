@@ -5,8 +5,7 @@ import setCookieOnReq from "@/utils/setCookieOnReq";
 import { cookies } from "next/headers";
 import queryString from "query-string";
 import { Suspense } from "react";
-
-const { default: PostList } = require("app/(blogs)/blogs/_components/PostList");
+import PostList from "../../../_components/PostList";
 
 async function Category({ params, searchParams }) {
   const { categorySlug } = await params;
