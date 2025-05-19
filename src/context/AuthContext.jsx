@@ -1,5 +1,6 @@
 "use client";
 import {
+  editUserApi,
   getUserApi,
   logoutApi,
   signinApi,
@@ -44,6 +45,12 @@ const authReducer = (state, action) => {
     case "user/loaded":
       return {
         user: action.payload,
+        isAuthenticated: true,
+      };
+    case "user/updated":
+      return {
+        ...state,
+        isLoading: false,
         isAuthenticated: true,
       };
     case "logout":
@@ -92,6 +99,21 @@ export default function AuthProvider({ children }) {
     }
   };
 
+  const editUser = async (values) => {
+    dispatch({ type: "loading" });
+    try {
+      const { message } = await editUserApi(values);
+      await getUser();
+      dispatch({ type: "user/updated" });
+      toast.success(message);
+      router.push("/profile");
+    } catch (error) {
+      const errorMsg = error?.response?.data?.message;
+      dispatch({ type: "rejected", payload: errorMsg });
+      toast.error(errorMsg);
+    }
+  };
+
   const getUser = async () => {
     dispatch({ type: "loading" });
     try {
@@ -124,7 +146,15 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, isLoading, signin, signup, logout }}
+      value={{
+        user,
+        isAuthenticated,
+        isLoading,
+        signin,
+        signup,
+        logout,
+        editUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

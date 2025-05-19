@@ -32,7 +32,11 @@ function Header({}) {
           </span>
         </div>
 
-        <Link href="/profile">
+        <Link
+          href="/profile/edit-profile"
+          className="flex items-center justify-center gap-x-2"
+        >
+          <p className="text-xs font-bold text-secondary-700">پروفایل</p>
           <Avatar src={user ? user?.avatarUrl : ""} />
         </Link>
 

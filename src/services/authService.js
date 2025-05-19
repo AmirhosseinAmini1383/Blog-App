@@ -19,3 +19,7 @@ export async function getAllUsersApi(options) {
 export function logoutApi() {
   return http.post(`/user/logout`);
 }
+
+export async function editUserApi(data) {
+  return http.patch("/user/update", data).then(({ data }) => data.data);
+}
